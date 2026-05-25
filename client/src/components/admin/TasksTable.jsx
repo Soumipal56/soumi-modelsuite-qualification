@@ -1,108 +1,105 @@
 import { deleteTask } from '../../api/tasks';
 
-const STATUS_COLORS = {
-  Open: '#6366f1',
-  Claimed: '#f59e0b',
-  Submitted: '#3b82f6',
-  Approved: '#10b981',
-  Rejected: '#ef4444',
+const STATUS_CLASS = {
+  Open:      'status-badge-Open',
+  Claimed:   'status-badge-Claimed',
+  Submitted: 'status-badge-Submitted',
+  Approved:  'status-badge-Approved',
+  Rejected:  'status-badge-Rejected',
 };
 
 const TasksTable = ({ tasks, onEdit, onRefresh }) => {
+
   const handleDelete = async (id) => {
-    // Intentional gap: no confirmation dialog — deletes immediately on click
+    // Intentional gap: no confirmation dialog
     try {
       await deleteTask(id);
       onRefresh();
-    } catch (error) {
+    } catch {
       alert('Failed to delete task');
     }
   };
 
   if (tasks.length === 0) {
     return (
-      <div className="empty-state">
-        <p>No tasks found. Create your first task!</p>
+      <div className="py-16 text-center text-text-faint text-[15px]">
+        No tasks found. Create your first task!
       </div>
     );
   }
 
+  const thCls = 'text-left px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.7px] text-text-faint border-b border-border whitespace-nowrap';
+  const tdCls = 'px-5 py-4 border-b border-border align-top';
+
   return (
-    <div className="table-wrapper">
-      <table className="tasks-table">
+    <div className="overflow-x-auto">
+      <table className="w-full border-collapse text-sm">
         <thead>
-          <tr>
-            <th>Title</th>
-            <th>Status</th>
-            <th>Assigned To</th>
-            {/* Intentional gap: date displayed as raw stored string, no formatting */}
-            <th>Due Date</th>
-            <th>Created</th>
-            <th>Actions</th>
+          <tr className="bg-bg-surface">
+            <th className={thCls}>Title</th>
+            <th className={thCls}>Status</th>
+            <th className={thCls}>Assigned To</th>
+            <th className={thCls}>Due Date</th>
+            {/* Intentional gap: raw ISO createdAt displayed */}
+            <th className={thCls}>Created</th>
+            <th className={thCls}>Actions</th>
           </tr>
         </thead>
         <tbody>
           {tasks.map((task) => (
-            <tr key={task._id}>
-              <td className="task-title-cell">
-                <span className="task-title">{task.title || '—'}</span>
+            <tr key={task._id} className="border-b border-border last:border-0 hover:bg-bg-hover transition-colors">
+
+              {/* Title + description */}
+              <td className={`${tdCls} max-w-[260px]`}>
+                <span className="block font-medium text-text-primary mb-0.5">{task.title || '—'}</span>
                 {task.description && (
-                  <span className="task-desc">{task.description}</span>
+                  <span className="block text-[12px] text-text-faint truncate max-w-[240px]">{task.description}</span>
                 )}
               </td>
 
-              <td>
-                {task.status ? (
-                  <span
-                    className="status-badge"
-                    style={{
-                      background: `${STATUS_COLORS[task.status]}22`,
-                      color: STATUS_COLORS[task.status] || '#9490b8',
-                      border: `1px solid ${STATUS_COLORS[task.status]}55`,
-                    }}
-                  >
-                    {task.status}
-                  </span>
-                ) : (
-                  // Intentional gap: tasks with undefined status show "—" with no warning
-                  <span className="status-badge" style={{ background: '#2e2a4a', color: '#9490b8', border: '1px solid #3e3a5a' }}>—</span>
-                )}
+              {/* Status */}
+              <td className={tdCls}>
+                <span className={`inline-block px-2.5 py-[3px] rounded-full text-[12px] font-medium ${STATUS_CLASS[task.status] || 'status-badge-Open'}`}>
+                  {task.status || '—'}
+                </span>
               </td>
 
-              <td className="assigned-cell">
+              {/* Assigned */}
+              <td className={`${tdCls} whitespace-nowrap`}>
                 {task.assignedTo ? (
-                  <>
-                    <span className="talent-avatar">{task.assignedTo.name?.[0]}</span>
-                    <span>{task.assignedTo.name}</span>
-                  </>
+                  <div className="flex items-center gap-2">
+                    <div className="w-[26px] h-[26px] rounded-full btn-gradient flex items-center justify-center text-[11px] font-bold text-white shrink-0">
+                      {task.assignedTo.name?.[0]}
+                    </div>
+                    <span className="text-text-primary">{task.assignedTo.name}</span>
+                  </div>
                 ) : (
-                  <span className="unassigned">Unassigned</span>
+                  <span className="text-text-faint text-[13px]">Unassigned</span>
                 )}
               </td>
 
-              {/* Intentional gap: raw string render — no date parsing or locale format */}
-              <td className="date-cell">{task.dueDate || '—'}</td>
+              {/* Due date — raw string */}
+              <td className={`${tdCls} text-text-muted text-[13px] whitespace-nowrap`}>
+                {task.dueDate || '—'}
+              </td>
 
-              <td className="date-cell">
-                {/* Intentional gap: using raw ISO string — ugly output */}
+              {/* Created — raw ISO */}
+              <td className={`${tdCls} text-text-muted text-[13px] whitespace-nowrap`}>
                 {task.createdAt}
               </td>
 
-              <td className="actions-cell">
-                <button
-                  className="btn-icon btn-edit"
-                  onClick={() => onEdit(task)}
-                  title="Edit"
-                >
-                  ✎
-                </button>
-                <button
-                  className="btn-icon btn-delete"
-                  onClick={() => handleDelete(task._id)}
-                  title="Delete"
-                >
-                  ✕
-                </button>
+              {/* Actions */}
+              <td className={tdCls}>
+                <div className="flex gap-1.5">
+                  <button onClick={() => onEdit(task)} title="Edit"
+                    className="w-[30px] h-[30px] rounded-lg border-none bg-primary/10 text-primary hover:bg-primary/25 cursor-pointer flex items-center justify-center text-sm transition-colors">
+                    ✎
+                  </button>
+                  <button onClick={() => handleDelete(task._id)} title="Delete"
+                    className="w-[30px] h-[30px] rounded-lg border-none bg-danger/10 text-danger hover:bg-danger/20 cursor-pointer flex items-center justify-center text-sm transition-colors">
+                    ✕
+                  </button>
+                </div>
               </td>
             </tr>
           ))}
