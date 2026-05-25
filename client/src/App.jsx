@@ -3,15 +3,8 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import TalentDashboard from './pages/talent/TalentDashboard';
 
-
-// Talent Dashboard — placeholder until Prompt 4
-const TalentDashboard = () => (
-  <div style={{ padding: '40px', fontFamily: 'Inter, sans-serif', color: '#f0eeff', background: '#0f0e17', minHeight: '100vh' }}>
-    <h1>🎯 Talent Dashboard</h1>
-    <p style={{ color: '#9490b8', marginTop: '8px' }}>Coming soon — your assigned tasks will appear here.</p>
-  </div>
-);
 
 
 // Intentional gap: PrivateRoute does NOT check token expiry — only checks presence
