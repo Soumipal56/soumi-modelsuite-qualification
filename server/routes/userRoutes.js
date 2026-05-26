@@ -1,4 +1,4 @@
-const express = require('express');
+﻿const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const { protect, adminOnly } = require('../middleware/authMiddleware');
@@ -8,7 +8,6 @@ const { protect, adminOnly } = require('../middleware/authMiddleware');
 // @access Admin
 router.get('/talents', protect, adminOnly, async (req, res) => {
   try {
-    // Intentional gap: returns full user objects — should project only _id, name, email
     const talents = await User.find({ role: 'Talent' });
     res.json(talents);
   } catch (error) {

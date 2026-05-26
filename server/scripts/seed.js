@@ -1,4 +1,4 @@
-require('dotenv').config();
+﻿require('dotenv').config();
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
@@ -8,8 +8,6 @@ const connectDB = require('../config/db');
 
 const seedData = async () => {
   await connectDB();
-
-  // Intentional gap: no check for existing data — re-running this script
   // will create duplicate users and tasks every time
   console.log('🌱 Seeding database...');
 
@@ -44,8 +42,6 @@ const seedData = async () => {
   console.log('✅ Users seeded:', admin.email, talent1.email, talent2.email);
 
   // ── Tasks ──────────────────────────────────────────────────────────────
-  // Intentional gap: dueDate stored as plain string (no Date type)
-  // Intentional gap: some tasks have no assignedTo — inconsistent state
   await Task.create([
     {
       title: 'Complete Brand Identity Kit',
@@ -78,7 +74,6 @@ const seedData = async () => {
       title: 'Social Media Content Calendar',
       description:
         'Plan and draft 30 days of social content across LinkedIn, Twitter, and Instagram for the talent portal launch.',
-      // Intentional gap: status left undefined — this task has no status value
       assignedTo: talent2._id,
       dueDate: '2024-07-01',
       createdBy: admin._id,
@@ -88,7 +83,6 @@ const seedData = async () => {
       description:
         'Write compelling hero copy, feature descriptions, and CTAs for the new landing page. Deliver as a Google Doc.',
       status: 'Open',
-      // Intentional gap: no assignedTo — unassigned task with Open status
       dueDate: '2024-06-28',
       createdBy: admin._id,
     },
