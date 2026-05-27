@@ -259,7 +259,3 @@ All pull requests must be reviewed and approved by the core maintainer:
 - **@Pranav140** (Pranav Garg)
 
 ---
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
