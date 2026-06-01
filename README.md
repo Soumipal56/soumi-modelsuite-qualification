@@ -63,10 +63,12 @@ modelsuite-qualification/
 
 ## 🚀 Setup
 
-### 1. Clone the repository
+### 1. Fork and Clone the repository
+
+First, fork this repository to your own GitHub account by clicking the "Fork" button at the top right of the repository page. Then clone your fork:
 
 ```bash
-git clone https://github.com/modelsuite-ai/modelsuite-qualification.git
+git clone https://github.com/<your-username>/modelsuite-qualification.git
 cd modelsuite-qualification
 ```
 

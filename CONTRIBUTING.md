@@ -6,10 +6,12 @@ Welcome! If you are participating in a qualification assessment or contributing 
 Every candidate is assigned a unique branch name via email (in the format: `27-26-22-7-5-pranav-test`). 
 **You must use this exact branch name** for your local work and remote pushing. Your Pull Request title must also be exactly this branch name.
 
-## 2. Cloning the Repository
-Start by cloning the repository to your local machine and checking out your assigned branch:
+## 2. Forking and Cloning the Repository
+Since you are not added as a direct collaborator, you must fork the repository to your own GitHub account first. Click the "Fork" button on the top right of the main repository page.
+
+Start by cloning your forked repository to your local machine and checking out your assigned branch:
 ```bash
-git clone https://github.com/modelsuite-ai/modelsuite-qualification.git
+git clone https://github.com/<your-username>/modelsuite-qualification.git
 cd modelsuite-qualification
 git checkout -b <your-assigned-branch-name>
 ```
@@ -24,8 +26,8 @@ Before committing your code, please ensure it meets the project standards. Run t
 
 ## 4. Raising a Pull Request (PR)
 When you are ready to submit your work:
-1. Push your branch to the repository.
-2. Open a Pull Request against the `master` branch.
+1. Push your branch to your forked repository.
+2. Open a Pull Request from your fork's branch against the upstream `master` branch.
 3. **PR Title**: Ensure the title exactly matches your assigned branch name.
 4. **PR Template**: Fill out the provided PR template thoroughly. This includes:
    - A brief summary of your changes.
