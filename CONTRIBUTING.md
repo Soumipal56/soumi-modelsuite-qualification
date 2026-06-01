@@ -36,3 +36,8 @@ We have an automated CI/CD pipeline that runs on every PR against `master`. It p
 - **Client & Server Checks**: Linting and building for both frontend and backend.
 
 **⚠️ Important:** If your PR fails any of these checks (e.g., due to lint errors, build failures, or Danger failures), **the pipeline will automatically close your PR** and leave a comment with the failure logs. Please fix the issues locally before submitting.
+
+## 6. Final Submission
+Before the designated deadline, you must submit two things:
+1. The **link to your Pull Request**.
+2. A **Voice recorded video** explaining the overall changes you made and demonstrating your work.

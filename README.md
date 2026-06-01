@@ -246,6 +246,7 @@ Please read the full guidelines in **[CONTRIBUTING.md](./CONTRIBUTING.md)** befo
 - Pre-flight local checks (linting/building)
 - PR Template requirements
 - Our automated CI/CD Pipeline (which automatically closes failing PRs)
+- Final submission requirements (PR link & Voice recorded video)
 
 ---
 
