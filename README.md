@@ -1,24 +1,25 @@
 # Task Pipeline
-
-![Build Status](https://img.shields.io/badge/build-passing-brightgreen?style=for-the-badge)
-![Version](https://img.shields.io/badge/version-1.0.0-blue?style=for-the-badge)
-![Maintained](https://img.shields.io/badge/Maintained%3F-yes-green.svg?style=for-the-badge)
-
 A full-stack task management system for talent onboarding workflows. Built with the MERN stack.
+
+> **📢 For Candidates:** This repo is used for assessment. See [CONTRIBUTING.md](./CONTRIBUTING.md) for submission instructions.
 
 ---
 
-## 👨‍💻 Maintainers & Core Team
+##  Maintainers & Core Team
 
 **Pranav Garg**
 - **Role:** Project Maintainer / Admin
 - **GitHub:** [@Pranav140](https://github.com/Pranav140)
 
+**Vansh Rastogi**
+- **Role:** Project Maintainer / Admin
+- **GitHub:** [@vanshrastogi111](https://github.com/vanshrastogi111)
+
 > This project is actively maintained. Please refer to the [CODEOWNERS](#codeowners) section for code review policies.
 
 ---
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -31,7 +32,7 @@ A full-stack task management system for talent onboarding workflows. Built with 
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 modelsuite-qualification/
@@ -57,7 +58,7 @@ modelsuite-qualification/
 
 ---
 
-## 📋 Prerequisites
+##  Prerequisites
 
 - **Node.js** v18 or higher — [nodejs.org](https://nodejs.org)
 - **MongoDB** running locally on port 27017, **or** a MongoDB Atlas connection string
@@ -66,7 +67,7 @@ modelsuite-qualification/
 
 ---
 
-## 🚀 Setup
+##  Setup
 
 ### 1. Clone the repository
 
@@ -127,7 +128,7 @@ npm install
 
 ---
 
-## 💻 Running the Application
+##  Running the Application
 
 You need **two terminals open simultaneously**.
 
@@ -147,7 +148,7 @@ The app will open at `http://localhost:5173`
 
 ---
 
-## 👥 User Roles & Flows
+##  User Roles & Flows
 
 ### Admin
 - Log in at `/login`
@@ -163,7 +164,7 @@ The app will open at `http://localhost:5173`
 
 ---
 
-## 🔌 API Reference
+##  API Reference
 
 ### Auth
 
@@ -206,7 +207,7 @@ The app will open at `http://localhost:5173`
 
 ---
 
-## 📜 Available Scripts
+##  Available Scripts
 
 ### Server (`/server`)
 
@@ -226,7 +227,7 @@ The app will open at `http://localhost:5173`
 
 ---
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 **"MongooseError: connect ECONNREFUSED"**
 → MongoDB is not running. Start it with `mongod` or use a MongoDB Atlas URI in `MONGO_URI`.
@@ -242,20 +243,33 @@ The app will open at `http://localhost:5173`
 
 ---
 
-## 🤝 Contribution Guidelines
+##  Contribution Guidelines
 
-We welcome contributions! To contribute:
+**This repository is used for candidate assessment as part of our hiring process.**
 
-1. Review the open issues and discuss your ideas.
-2. Fork the repository and create your feature branch.
-3. Raise a PR for the particular issue assigned to you.
-4. Go to the original issue and link your PR there to get it reviewed.
+To submit your work:
+
+1. **Read the complete guide:** [CONTRIBUTING.md](./CONTRIBUTING.md)
+2. Fork this repository to your GitHub account
+3. Create a task branch (never work on `master`)
+4. Complete your assigned task following our code standards
+5. Test locally using `npm run lint` and `npm run build`
+6. Submit a PR following the required format
+
+** Important:**
+- All PRs are automatically tested via CI/CD
+- PRs that fail any check will be **automatically closed**
+- PR title must follow format: `[TASK-ID]-description`
+- PR description must be complete with testing steps and screenshots (for UI changes)
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed instructions and requirements.
 
 ---
 
-## 🛡 CODEOWNERS
+##  CODEOWNERS
 
-All pull requests must be reviewed and approved by the core maintainer:
+All pull requests must be reviewed and approved by the core maintainers:
 - **@Pranav140** (Pranav Garg)
+- **@vanshrastogi111** (Vansh Rastogi)
 
 ---
