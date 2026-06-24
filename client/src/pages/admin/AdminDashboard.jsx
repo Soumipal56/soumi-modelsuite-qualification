@@ -36,12 +36,12 @@ const AdminDashboard = () => {
     }
   };
 
-  // eslint-disable-next-line
   useEffect(() => {
     const timer = setTimeout(() => {
       loadTasks();
     }, 300);
     return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search, statusFilter]);
 
   const stats = {
