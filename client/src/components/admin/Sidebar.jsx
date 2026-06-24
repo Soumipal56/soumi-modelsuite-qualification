@@ -70,7 +70,7 @@ const Sidebar = () => {
         </p>
 
         {navItems.map(({ label, path, Icon }) => {
-          const isActive = location.pathname === path;
+          const isActive = location.pathname.startsWith(path);
           return (
             <button key={path}
               onClick={() => navigate(path)}
@@ -85,27 +85,27 @@ const Sidebar = () => {
       {/* Footer */}
       <div className="px-3 pb-5">
         <div className="sidebar-divider mb-4" />
-        <div className="flex items-center justify-between gap-2 px-1">
-          <div className="flex items-center gap-2.5 min-w-0">
-            <div className="w-8 h-8 rounded-full avatar-admin flex items-center justify-center text-[12px] font-bold text-white shrink-0">
-              {user?.name?.[0]?.toUpperCase() ?? 'A'}
-            </div>
-            <div className="min-w-0">
-              <p className="text-[13px] font-semibold truncate max-w-[110px]"
-                style={{ color: '#E5E2E1', fontFamily: 'Inter, sans-serif' }}>
-                {user?.name}
-              </p>
-              <p className="text-[11px]" style={{ color: '#4B5563' }}>Admin</p>
-            </div>
+        <div className="flex items-center gap-2.5 px-2 mb-4">
+          <div className="w-8 h-8 rounded-full avatar-admin flex items-center justify-center text-[12px] font-bold text-white shrink-0">
+            {user?.name?.[0]?.toUpperCase() ?? 'A'}
           </div>
-
-          <button
-            onClick={() => { logout(); navigate('/login'); }}
-            title="Sign out"
-            className="logout-btn">
-            <IconLogout />
-          </button>
+          <div className="min-w-0">
+            <p className="text-[13px] font-semibold truncate max-w-[150px]"
+              style={{ color: '#E5E2E1', fontFamily: 'Inter, sans-serif' }}>
+              {user?.name}
+            </p>
+            <p className="text-[11px]" style={{ color: '#4B5563' }}>Admin</p>
+          </div>
         </div>
+
+        <button
+          onClick={() => { logout(); navigate('/login'); }}
+          title="Sign out"
+          className="logout-btn w-full gap-2 py-2.5 rounded-lg text-[13px] font-medium"
+          style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}>
+          <IconLogout />
+          <span>Logout</span>
+        </button>
       </div>
     </aside>
   );

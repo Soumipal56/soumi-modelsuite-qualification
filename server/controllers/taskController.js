@@ -1,11 +1,28 @@
-﻿const Task = require('../models/Task');
+const Task = require('../models/Task');
+const User = require('../models/User');
 
 // @desc  Get all tasks
 // @route GET /api/tasks
 // @access Admin
 const getAllTasks = async (req, res) => {
   try {
-    const tasks = await Task.find({})
+    const { search, status } = req.query;
+    let query = {};
+
+    if (search) {
+      query.$text = { $search: search };
+    }
+
+    if (status && status !== 'All') {
+      if (status.toLowerCase() === 'completed') {
+        // Map 'Completed' to Approved or Rejected
+        query.status = { $in: ['Approved', 'Rejected'] };
+      } else {
+        query.status = new RegExp(`^${status}$`, 'i');
+      }
+    }
+
+    const tasks = await Task.find(query)
       .populate('assignedTo', 'name email')
       .populate('createdBy', 'name')
       .sort({ createdAt: -1 });
@@ -41,6 +58,13 @@ const createTask = async (req, res) => {
   const { title, description, status, assignedTo, dueDate } = req.body;
 
   try {
+    if (assignedTo) {
+      const assignedUser = await User.findById(assignedTo);
+      if (!assignedUser || assignedUser.role !== 'Talent') {
+        return res.status(400).json({ message: 'Tasks can only be assigned to users with the Talent role' });
+      }
+    }
+
     const task = await Task.create({
       title,
       description,
@@ -63,6 +87,14 @@ const updateTask = async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);
     if (!task) return res.status(404).json({ message: 'Task not found' });
+
+    if (req.body.assignedTo) {
+      const assignedUser = await User.findById(req.body.assignedTo);
+      if (!assignedUser || assignedUser.role !== 'Talent') {
+        return res.status(400).json({ message: 'Tasks can only be assigned to users with the Talent role' });
+      }
+    }
+
     // including internal fields like createdBy or __v
     const updated = await Task.findByIdAndUpdate(
       req.params.id,

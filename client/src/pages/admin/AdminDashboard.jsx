@@ -29,7 +29,7 @@ const AdminDashboard = () => {
 
   const loadTasks = async () => {
     try {
-      const { data } = await fetchAllTasks();
+      const { data } = await fetchAllTasks(search, statusFilter);
       setTasks(data);
     } catch {
       alert('Failed to load tasks');
@@ -37,30 +37,29 @@ const AdminDashboard = () => {
   };
 
   // eslint-disable-next-line
-  useEffect(() => { loadTasks(); }, []);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      loadTasks();
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [search, statusFilter]);
 
   const stats = {
     total:     tasks.length,
     open:      tasks.filter((t) => t.status === 'Open').length,
     submitted: tasks.filter((t) => t.status === 'Submitted').length,
-    approved:  tasks.filter((t) => t.status === 'Approved').length,
+    completed: tasks.filter((t) => t.status === 'Approved' || t.status === 'Rejected').length,
   };
 
   const statCards = [
     { label: 'Total Tasks', value: stats.total,     colorClass: 'stat-card-default', valueColor: '#E5E2E1' },
     { label: 'Open',        value: stats.open,      colorClass: 'stat-card-blue',    valueColor: '#60A5FA' },
     { label: 'Submitted',   value: stats.submitted, colorClass: 'stat-card-info',    valueColor: '#60A5FA' },
-    { label: 'Approved',    value: stats.approved,  colorClass: 'stat-card-green',   valueColor: '#34D399' },
+    { label: 'Completed',   value: stats.completed, colorClass: 'stat-card-green',   valueColor: '#34D399' },
   ];
 
-  /* Filter tasks */
-  const filteredTasks = tasks.filter((t) => {
-    const matchSearch = !search ||
-      t.title?.toLowerCase().includes(search.toLowerCase()) ||
-      t.assignedTo?.name?.toLowerCase().includes(search.toLowerCase());
-    const matchStatus = statusFilter === 'All' || t.status === statusFilter;
-    return matchSearch && matchStatus;
-  });
+  /* Filter tasks is now done on the backend */
+  const filteredTasks = tasks;
 
   return (
     <div className="flex min-h-screen" style={{ background: '#050505' }}>
@@ -150,8 +149,7 @@ const AdminDashboard = () => {
                 <option value="Open">Open</option>
                 <option value="Claimed">Claimed</option>
                 <option value="Submitted">Submitted</option>
-                <option value="Approved">Approved</option>
-                <option value="Rejected">Rejected</option>
+                <option value="Completed">Completed</option>
               </select>
             </div>
           </div>
