@@ -18,12 +18,15 @@ export default defineConfig([
       react,
     },
     languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
       globals: globals.browser,
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
     rules: {
       'react/jsx-uses-vars': 'error',
       'react/jsx-uses-react': 'error',
+      'react/react-in-jsx-scope': 'off',
     },
   },
 ])
