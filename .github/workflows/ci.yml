@@ -163,9 +163,11 @@ jobs:
             } else {
               const pr = prObj.number;
               const author = prObj.user ? prObj.user.login : '';
-              const body = `@${author}\n\nThe following CI jobs failed:\n\n${failures}\nLogs: ${runUrl}`;
-              await github.rest.issues.createComment({ owner, repo, issue_number: pr, body });
-            }
+              try {
+                await github.rest.issues.createComment({ owner, repo, issue_number: pr, body });
+              } catch (error) {
+                console.log('Failed to post comment. This is likely due to restrictive GITHUB_TOKEN permissions on forks.', error.message);
+              }
         env:
           FAILURES: ${{ steps.build-failure.outputs.failures }}
 
@@ -216,9 +218,13 @@ jobs:
               `- [ ] Test functionality locally if needed\n\n` +
               `*This PR is ready for human review.*`;
 
-            await github.rest.issues.createComment({
-              owner,
-              repo,
-              issue_number: pr,
-              body
-            });
+            try {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: pr,
+                body
+              });
+            } catch (error) {
+              console.log('Failed to post comment. This is likely due to restrictive GITHUB_TOKEN permissions on forks.', error.message);
+            }
