@@ -3,6 +3,7 @@ const { defineConfig } = require('eslint/config')
 
 module.exports = defineConfig([
   {
+    ignores: ['node_modules', 'dist'],
     files: ['**/*.js'],
     extends: [js.configs.recommended],
     languageOptions: {

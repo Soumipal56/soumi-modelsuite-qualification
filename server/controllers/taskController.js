@@ -1,5 +1,7 @@
 const Task = require('../models/Task');
 const User = require('../models/User');
+const Submission = require('../models/Submission');
+const mongoose = require('mongoose');
 
 // @desc  Get all tasks
 // @route GET /api/tasks
@@ -38,7 +40,11 @@ const getAllTasks = async (req, res) => {
 // @access Admin
 const getTaskById = async (req, res) => {
   try {
-    // — will throw a CastError from Mongoose instead of a clean 400
+    // Return a clean 400 instead of a Mongoose CastError for invalid IDs
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: 'Invalid task ID' });
+    }
+
     const task = await Task.findById(req.params.id)
       .populate('assignedTo', 'name email')
       .populate('createdBy', 'name');
@@ -95,10 +101,21 @@ const updateTask = async (req, res) => {
       }
     }
 
-    // including internal fields like createdBy or __v
+    // Prevent mass assignment by only taking allowed fields
+    const allowedUpdates = {
+      title: req.body.title,
+      description: req.body.description,
+      status: req.body.status,
+      assignedTo: req.body.assignedTo,
+      dueDate: req.body.dueDate
+    };
+    
+    // Remove undefined fields so they don't overwrite existing ones
+    Object.keys(allowedUpdates).forEach(key => allowedUpdates[key] === undefined && delete allowedUpdates[key]);
+
     const updated = await Task.findByIdAndUpdate(
       req.params.id,
-      { ...req.body },
+      { $set: allowedUpdates },
       { new: true }
     ).populate('assignedTo', 'name email');
 
@@ -115,7 +132,8 @@ const deleteTask = async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);
     if (!task) return res.status(404).json({ message: 'Task not found' });
-    // — orphaned Submission documents remain in DB after task deletion
+    // Delete orphaned Submission documents associated with this task
+    await Submission.deleteMany({ taskId: req.params.id });
     await Task.findByIdAndDelete(req.params.id);
 
     res.json({ message: 'Task deleted' });
